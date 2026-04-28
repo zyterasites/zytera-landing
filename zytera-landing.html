@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zytera — Tu presencia online, sin complicaciones</title>
+  <meta name="description" content="Páginas web profesionales para negocios locales. Catálogo, panel de admin, SEO y soporte incluidos. Desde 49€/mes sin permanencia." />
+
+  <!-- Fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Variables ── */
+    :root {
+      --crimson:     #8B1A1A;
+      --crimson-mid: #A52020;
+      --crimson-light:#C0392B;
+      --beige:       #F5ECD7;
+      --beige-dark:  #E8D5B0;
+      --beige-deeper:#D4B896;
+      --ink:         #1A0A0A;
+      --ink-mid:     #2D1515;
+      --ink-soft:    #4A2020;
+      --text-muted:  #8A6A5A;
+      --white:       #FDFAF5;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Instrument Sans', sans-serif;
+      background: var(--ink);
+      color: var(--beige);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Grain overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.4;
+    }
+
+    /* ── Tipografía ── */
+    .font-display { font-family: 'Syne', sans-serif; }
+    .font-serif   { font-family: 'Instrument Serif', serif; }
+
+    /* ── Navbar ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.25rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.3s, backdrop-filter 0.3s;
+    }
+    nav.scrolled {
+      background: rgba(26, 10, 10, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(139, 26, 26, 0.2);
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--crimson-light); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--beige-dark);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--white); }
+
+    .btn-nav {
+      background: var(--crimson);
+      color: var(--white) !important;
+      padding: 0.5rem 1.25rem;
+      border-radius: 0;
+      font-weight: 600 !important;
+      font-size: 0.8rem !important;
+      letter-spacing: 0.08em !important;
+      text-transform: uppercase;
+      transition: background 0.2s !important;
+    }
+    .btn-nav:hover { background: var(--crimson-mid) !important; color: var(--white) !important; }
+
+    /* ── Botones ── */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--crimson);
+      color: var(--white);
+      padding: 0.875rem 2rem;
+      font-family: 'Instrument Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.875rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .btn-primary:hover { background: var(--crimson-mid); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(139,26,26,0.4); }
+    .btn-primary:hover::after { opacity: 1; }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: transparent;
+      color: var(--beige);
+      padding: 0.875rem 2rem;
+      font-family: 'Instrument Sans', sans-serif;
+      font-weight: 500;
+      font-size: 0.875rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid rgba(245, 236, 215, 0.3);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-outline:hover { border-color: var(--beige); background: rgba(245,236,215,0.05); }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 7rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Fondo geométrico del hero */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 70% 40%, rgba(139,26,26,0.15) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 20% 80%, rgba(165,32,32,0.08) 0%, transparent 50%);
+    }
+
+    /* Líneas decorativas */
+    .hero-lines {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(139,26,26,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(139,26,26,0.06) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: radial-gradient(ellipse at 70% 40%, black 20%, transparent 70%);
+    }
+
+    /* Círculo decorativo */
+    .hero-circle {
+      position: absolute;
+      right: -10%;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      border: 1px solid rgba(139,26,26,0.15);
+      pointer-events: none;
+    }
+    .hero-circle::before {
+      content: '';
+      position: absolute;
+      inset: 40px;
+      border-radius: 50%;
+      border: 1px solid rgba(139,26,26,0.1);
+    }
+    .hero-circle::after {
+      content: '';
+      position: absolute;
+      inset: 100px;
+      border-radius: 50%;
+      border: 1px solid rgba(139,26,26,0.08);
+    }
+
+    .hero-content {
+      max-width: 700px;
+      position: relative;
+      z-index: 1;
+      margin: 0 auto;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(139,26,26,0.15);
+      border: 1px solid rgba(139,26,26,0.3);
+      color: #E88080;
+      padding: 0.35rem 0.875rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+    .hero-badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--crimson-light);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    .hero-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+    .hero-title em {
+      font-style: italic;
+      font-family: 'Instrument Serif', serif;
+      color: var(--crimson-light);
+    }
+
+    .hero-subtitle {
+      font-size: 1.125rem;
+      color: var(--beige-dark);
+      line-height: 1.7;
+      max-width: 520px;
+      margin-bottom: 2.5rem;
+      animation: fadeUp 0.6s 0.35s ease both;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      animation: fadeUp 0.6s 0.5s ease both;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 2.5rem;
+      margin-top: 4rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid rgba(245,236,215,0.1);
+      animation: fadeUp 0.6s 0.65s ease both;
+    }
+    .hero-stat-value {
+      font-family: 'Syne', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1;
+    }
+    .hero-stat-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-top: 0.25rem;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Sección genérica ── */
+    section { padding: 6rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--crimson-light);
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: -0.02em;
+      color: var(--white);
+      margin-bottom: 1rem;
+      line-height: 1.1;
+    }
+    .section-title em {
+      font-style: italic;
+      font-family: 'Instrument Serif', serif;
+      color: var(--crimson-light);
+    }
+    .section-subtitle {
+      font-size: 1rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-width: 480px;
+    }
+
+    /* ── Demo / Mockup ── */
+    .demo-section {
+      background: var(--ink-mid);
+      border-top: 1px solid rgba(139,26,26,0.15);
+      border-bottom: 1px solid rgba(139,26,26,0.15);
+    }
+
+    .demo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .demo-mockup {
+      background: #0D0505;
+      border: 1px solid rgba(139,26,26,0.2);
+      border-radius: 2px;
+      overflow: hidden;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(139,26,26,0.1);
+    }
+
+    .mockup-bar {
+      background: #150808;
+      padding: 0.625rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-bottom: 1px solid rgba(139,26,26,0.1);
+    }
+    .mockup-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+    }
+    .mockup-url {
+      flex: 1;
+      background: rgba(139,26,26,0.1);
+      border-radius: 2px;
+      padding: 0.2rem 0.75rem;
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      font-family: monospace;
+      margin-left: 0.5rem;
+    }
+
+    .mockup-content {
+      padding: 1.5rem;
+      min-height: 280px;
+    }
+
+    .mockup-hero-bar {
+      height: 80px;
+      background: linear-gradient(135deg, rgba(139,26,26,0.3), rgba(26,10,10,0.8));
+      border: 1px solid rgba(139,26,26,0.15);
+      display: flex;
+      align-items: center;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+    .mockup-title-block { flex: 1; }
+    .mockup-line { height: 8px; background: rgba(245,236,215,0.15); border-radius: 1px; margin-bottom: 6px; }
+    .mockup-line.short { width: 60%; }
+    .mockup-line.accent { background: rgba(139,26,26,0.4); width: 40%; }
+
+    .mockup-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+    }
+    .mockup-card {
+      background: rgba(139,26,26,0.08);
+      border: 1px solid rgba(139,26,26,0.12);
+      padding: 0.5rem;
+    }
+    .mockup-card-img {
+      height: 40px;
+      background: rgba(139,26,26,0.15);
+      margin-bottom: 0.4rem;
+    }
+    .mockup-card-line { height: 5px; background: rgba(245,236,215,0.1); border-radius: 1px; margin-bottom: 3px; }
+    .mockup-card-price { height: 5px; background: rgba(139,26,26,0.3); border-radius: 1px; width: 60%; }
+
+    /* ── Features ── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: rgba(139,26,26,0.1);
+      border: 1px solid rgba(139,26,26,0.1);
+      margin-top: 3rem;
+    }
+
+    .feature-card {
+      background: var(--ink);
+      padding: 2rem 1.75rem;
+      transition: background 0.2s;
+    }
+    .feature-card:hover { background: var(--ink-mid); }
+
+    .feature-icon {
+      width: 40px;
+      height: 40px;
+      background: rgba(139,26,26,0.15);
+      border: 1px solid rgba(139,26,26,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+      color: var(--crimson-light);
+    }
+
+    .feature-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+    .feature-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ── Precios ── */
+    .pricing-section { background: var(--ink-mid); }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(139,26,26,0.15);
+      border: 1px solid rgba(139,26,26,0.15);
+      margin-top: 3rem;
+    }
+
+    .pricing-card {
+      background: var(--ink);
+      padding: 2.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: background 0.2s;
+    }
+    .pricing-card:hover { background: #1f0b0b; }
+    .pricing-card.featured {
+      background: var(--crimson);
+      border: none;
+    }
+    .pricing-card.featured:hover { background: var(--crimson-mid); }
+
+    .pricing-badge {
+      position: absolute;
+      top: -1px;
+      right: 1.5rem;
+      background: var(--beige);
+      color: var(--crimson);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.75rem;
+    }
+
+    .pricing-plan {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+    .pricing-card.featured .pricing-plan { color: rgba(255,255,255,0.7); }
+
+    .pricing-price {
+      font-family: 'Syne', sans-serif;
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+    .pricing-price span {
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+    .pricing-card.featured .pricing-price span { color: rgba(255,255,255,0.6); }
+
+    .pricing-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(139,26,26,0.15);
+    }
+    .pricing-card.featured .pricing-desc {
+      color: rgba(255,255,255,0.7);
+      border-color: rgba(255,255,255,0.15);
+    }
+
+    .pricing-features {
+      list-style: none;
+      flex: 1;
+      margin-bottom: 2rem;
+    }
+    .pricing-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.625rem;
+      font-size: 0.85rem;
+      color: var(--beige-dark);
+      margin-bottom: 0.75rem;
+    }
+    .pricing-card.featured .pricing-features li { color: rgba(255,255,255,0.9); }
+    .pricing-features li::before {
+      content: '✓';
+      color: var(--crimson-light);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .pricing-card.featured .pricing-features li::before { color: var(--beige); }
+
+    .btn-pricing {
+      display: block;
+      text-align: center;
+      padding: 0.875rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+      font-family: 'Instrument Sans', sans-serif;
+    }
+    .btn-pricing-outline {
+      border: 1px solid rgba(139,26,26,0.3);
+      color: var(--beige);
+      background: transparent;
+    }
+    .btn-pricing-outline:hover {
+      border-color: var(--crimson);
+      background: rgba(139,26,26,0.1);
+    }
+    .btn-pricing-solid {
+      background: var(--ink);
+      color: var(--crimson);
+    }
+    .btn-pricing-solid:hover { background: rgba(26,10,10,0.8); }
+
+    /* ── Cómo funciona ── */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      margin-top: 3rem;
+      position: relative;
+    }
+    .steps-grid::before {
+      content: '';
+      position: absolute;
+      top: 20px;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: rgba(139,26,26,0.2);
+    }
+
+    .step {
+      padding: 0 1.5rem;
+      text-align: center;
+    }
+    .step-num {
+      width: 40px;
+      height: 40px;
+      background: var(--crimson);
+      color: var(--white);
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.25rem;
+      position: relative;
+      z-index: 1;
+    }
+    .step-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+    .step-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ── CTA final ── */
+    .cta-section {
+      background: var(--crimson);
+      text-align: center;
+      padding: 5rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.08), transparent 70%);
+    }
+    .cta-section::after {
+      content: 'ZYTERA';
+      position: absolute;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 20vw;
+      color: rgba(255,255,255,0.04);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      white-space: nowrap;
+      pointer-events: none;
+    }
+    .cta-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      color: var(--white);
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+    .cta-sub {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 2.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    .cta-btns {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+    .btn-cta-white {
+      background: var(--white);
+      color: var(--crimson);
+      padding: 0.875rem 2rem;
+      font-weight: 700;
+      font-size: 0.875rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+    }
+    .btn-cta-white:hover { background: var(--beige); transform: translateY(-1px); }
+    .btn-cta-ghost {
+      border: 1px solid rgba(255,255,255,0.4);
+      color: var(--white);
+      padding: 0.875rem 2rem;
+      font-weight: 500;
+      font-size: 0.875rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+    }
+    .btn-cta-ghost:hover { border-color: white; background: rgba(255,255,255,0.1); }
+
+    /* ── Footer ── */
+    footer {
+      background: #0D0505;
+      border-top: 1px solid rgba(139,26,26,0.15);
+      padding: 3rem 2rem;
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: var(--white);
+      text-decoration: none;
+    }
+    .footer-logo span { color: var(--crimson-light); }
+    .footer-copy {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+    .footer-links a {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--beige); }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .demo-grid { grid-template-columns: 1fr; }
+      .features-grid { grid-template-columns: 1fr; gap: 1px; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .steps-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+      .steps-grid::before { display: none; }
+      .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
+      .footer-inner { flex-direction: column; text-align: center; }
+    }
+
+    /* ── Scroll reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <nav id="navbar">
+    <a href="/" class="nav-logo">Zyte<span>ra</span></a>
+    <ul class="nav-links">
+      <li><a href="#como-funciona">Cómo funciona</a></li>
+      <li><a href="#caracteristicas">Características</a></li>
+      <li><a href="#precios">Precios</a></li>
+      <li><a href="#contacto" class="btn-nav">Empezar</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-lines"></div>
+    <div class="hero-circle"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge">
+        <div class="hero-badge-dot"></div>
+        Páginas web para negocios locales
+      </div>
+
+      <h1 class="hero-title">
+        Tu negocio merece<br/>
+        una web <em>de verdad</em>
+      </h1>
+
+      <p class="hero-subtitle">
+        Catálogo profesional, panel de administración, SEO local y soporte incluidos.
+        Sin conocimientos técnicos. Sin permanencia. Desde 49€/mes.
+      </p>
+
+      <div class="hero-ctas">
+        <a href="#precios" class="btn-primary">
+          Ver planes
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        </a>
+        <a href="#como-funciona" class="btn-outline">Cómo funciona</a>
+      </div>
+
+      <div class="hero-stats">
+        <div>
+          <div class="hero-stat-value">48h</div>
+          <div class="hero-stat-label">Tu web lista en</div>
+        </div>
+        <div>
+          <div class="hero-stat-value">0€</div>
+          <div class="hero-stat-label">Pago inicial</div>
+        </div>
+        <div>
+          <div class="hero-stat-value">∞</div>
+          <div class="hero-stat-label">Sin permanencia</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DEMO ── -->
+  <section class="demo-section">
+    <div class="container">
+      <div class="demo-grid">
+        <div class="reveal">
+          <p class="section-label">Demo en vivo</p>
+          <h2 class="section-title">Así quedaría<br/><em>tu negocio</em></h2>
+          <p class="section-subtitle" style="margin-bottom: 2rem;">
+            Cada web es única — con tus colores, tu logo, tus fotos y tus productos.
+            El cliente ve tu marca, no la nuestra.
+          </p>
+          <a href="https://garcia-motors.zytera.com" target="_blank" class="btn-primary">
+            Ver ejemplo real
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+          </a>
+        </div>
+
+        <div class="reveal" style="transition-delay: 0.15s">
+          <div class="demo-mockup">
+            <div class="mockup-bar">
+              <div class="mockup-dot" style="background:#ff5f57"></div>
+              <div class="mockup-dot" style="background:#ffbd2e"></div>
+              <div class="mockup-dot" style="background:#28c840"></div>
+              <div class="mockup-url">tu-negocio.zytera.com</div>
+            </div>
+            <div class="mockup-content">
+              <div class="mockup-hero-bar">
+                <div class="mockup-title-block">
+                  <div class="mockup-line"></div>
+                  <div class="mockup-line short"></div>
+                  <div class="mockup-line accent"></div>
+                </div>
+              </div>
+              <div style="margin-bottom: 0.75rem;">
+                <div class="mockup-line" style="width:30%; height:4px; background:rgba(139,26,26,0.3); margin-bottom:0.5rem;"></div>
+              </div>
+              <div class="mockup-cards">
+                <div class="mockup-card">
+                  <div class="mockup-card-img"></div>
+                  <div class="mockup-card-line"></div>
+                  <div class="mockup-card-line" style="width:80%"></div>
+                  <div class="mockup-card-price"></div>
+                </div>
+                <div class="mockup-card">
+                  <div class="mockup-card-img"></div>
+                  <div class="mockup-card-line"></div>
+                  <div class="mockup-card-line" style="width:70%"></div>
+                  <div class="mockup-card-price"></div>
+                </div>
+                <div class="mockup-card">
+                  <div class="mockup-card-img"></div>
+                  <div class="mockup-card-line"></div>
+                  <div class="mockup-card-line" style="width:90%"></div>
+                  <div class="mockup-card-price"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CÓMO FUNCIONA ── -->
+  <section id="como-funciona">
+    <div class="container">
+      <div class="reveal" style="text-align:center; margin-bottom: 1rem;">
+        <p class="section-label">Proceso</p>
+        <h2 class="section-title">En marcha en <em>48 horas</em></h2>
+      </div>
+      <div class="steps-grid reveal" style="transition-delay: 0.1s">
+        <div class="step">
+          <div class="step-num">01</div>
+          <div class="step-title">Nos contactas</div>
+          <div class="step-desc">Cuéntanos tu negocio y elegimos el plan que mejor se adapta.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <div class="step-title">Configuramos tu web</div>
+          <div class="step-desc">Aplicamos tus colores, logo y datos. Tu identidad, no la nuestra.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <div class="step-title">Subes tu catálogo</div>
+          <div class="step-desc">Panel de admin sencillo. Añades tus productos con fotos en minutos.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">04</div>
+          <div class="step-title">A funcionar</div>
+          <div class="step-desc">Tu web está online y empieza a recibir clientes potenciales.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CARACTERÍSTICAS ── -->
+  <section id="caracteristicas" style="padding-top: 0;">
+    <div class="container">
+      <div class="reveal">
+        <p class="section-label">Qué incluye</p>
+        <h2 class="section-title">Todo lo que necesitas,<br/><em>nada de lo que no</em></h2>
+      </div>
+      <div class="features-grid reveal" style="transition-delay: 0.1s">
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          </div>
+          <div class="feature-title">Catálogo con fotos</div>
+          <div class="feature-desc">Sube múltiples fotos por producto. Galería con lightbox incluida. Cloudinary CDN para carga rápida.</div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+          </div>
+          <div class="feature-title">Panel de administración</div>
+          <div class="feature-desc">Gestiona tus productos, leads y configuración visual sin tocar código. Intuitivo y rápido.</div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          </div>
+          <div class="feature-title">SEO local incluido</div>
+          <div class="feature-desc">Schema.org para negocios locales. Aparece en Google con tu dirección, teléfono y horarios.</div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/></svg>
+          </div>
+          <div class="feature-title">Identidad visual propia</div>
+          <div class="feature-desc">Tus colores, tu logo, tus fuentes. El cliente ve tu marca, no una plantilla genérica.</div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          </div>
+          <div class="feature-title">Gestión de leads</div>
+          <div class="feature-desc">Recibe y gestiona las consultas de tus clientes potenciales directamente en el panel.</div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+          </div>
+          <div class="feature-title">100% adaptada al móvil</div>
+          <div class="feature-desc">Diseño responsive optimizado para que tus clientes naveguen perfectamente desde el móvil.</div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </div>
+          <div class="feature-title">WhatsApp integrado</div>
+          <div class="feature-desc">Botón flotante de WhatsApp con mensaje personalizado. Tus clientes te contactan en un clic.</div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
+          </div>
+          <div class="feature-title">Subdominio propio</div>
+          <div class="feature-desc">tu-negocio.zytera.com desde el primer día. Dominio propio disponible en planes superiores.</div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          </div>
+          <div class="feature-title">HTTPS y seguridad</div>
+          <div class="feature-desc">Certificado SSL incluido. Autenticación JWT para el panel de administración.</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PRECIOS ── -->
+  <section id="precios" class="pricing-section">
+    <div class="container">
+      <div class="reveal" style="text-align:center">
+        <p class="section-label">Precios</p>
+        <h2 class="section-title">Sin sorpresas,<br/><em>sin permanencia</em></h2>
+        <p class="section-subtitle" style="margin: 0 auto; text-align:center">
+          Cancela cuando quieras. Sin contratos. Sin costes ocultos.
+        </p>
+      </div>
+
+      <div class="pricing-grid reveal" style="transition-delay: 0.1s">
+
+        <!-- Básico -->
+        <div class="pricing-card">
+          <div class="pricing-plan">Básico</div>
+          <div class="pricing-price">49€<span>/mes</span></div>
+          <div class="pricing-desc">Ideal para negocios pequeños que quieren presencia online profesional.</div>
+          <ul class="pricing-features">
+            <li>Web completa con catálogo</li>
+            <li>Hasta 30 fichas de productos</li>
+            <li>Galería de fotos por producto</li>
+            <li>Formulario de contacto y leads</li>
+            <li>Panel de administración</li>
+            <li>SEO local con Schema.org</li>
+            <li>WhatsApp integrado</li>
+            <li>Subdominio zytera.com</li>
+            <li>Soporte por email</li>
+          </ul>
+          <a href="#contacto" class="btn-pricing btn-pricing-outline">Empezar</a>
+        </div>
+
+        <!-- Profesional (destacado) -->
+        <div class="pricing-card featured">
+          <div class="pricing-badge">Más popular</div>
+          <div class="pricing-plan">Profesional</div>
+          <div class="pricing-price">79€<span>/mes</span></div>
+          <div class="pricing-desc">Para negocios que quieren vender online con carrito de compra.</div>
+          <ul class="pricing-features">
+            <li>Todo lo del plan Básico</li>
+            <li>Tienda online con carrito</li>
+            <li>Pasarela de pago integrada</li>
+            <li>Hasta 200 productos</li>
+            <li>Gestión de pedidos</li>
+            <li>Cupones y descuentos</li>
+            <li>SEO avanzado</li>
+            <li>Redes sociales integradas</li>
+            <li>Soporte prioritario</li>
+          </ul>
+          <a href="#contacto" class="btn-pricing btn-pricing-solid">Empezar</a>
+        </div>
+
+        <!-- Premium -->
+        <div class="pricing-card">
+          <div class="pricing-plan">Premium</div>
+          <div class="pricing-price">119€<span>/mes</span></div>
+          <div class="pricing-desc">La solución completa para negocios que quieren destacar.</div>
+          <ul class="pricing-features">
+            <li>Todo lo del plan Profesional</li>
+            <li>Productos ilimitados</li>
+            <li>Dominio propio incluido</li>
+            <li>Estadísticas avanzadas</li>
+            <li>Personalización de diseño</li>
+            <li>Múltiples usuarios admin</li>
+            <li>Integración Google Analytics</li>
+            <li>Soporte WhatsApp directo</li>
+            <li>Actualizaciones prioritarias</li>
+          </ul>
+          <a href="#contacto" class="btn-pricing btn-pricing-outline">Empezar</a>
+        </div>
+
+      </div>
+
+      <!-- Nota sin permanencia -->
+      <p class="reveal" style="text-align:center; margin-top: 2rem; font-size:0.8rem; color: var(--text-muted); transition-delay: 0.2s">
+        Sin permanencia · Cancela cuando quieras · Pago mensual automático
+      </p>
+    </div>
+  </section>
+
+  <!-- ── CTA CONTACTO ── -->
+  <section id="contacto" class="cta-section">
+    <h2 class="cta-title">¿Listo para empezar?</h2>
+    <p class="cta-sub">Tu web lista en 48 horas. Sin pago inicial.</p>
+    <div class="cta-btns">
+      <a href="https://wa.me/34TUNUMERO?text=Hola,%20me%20interesa%20Zytera" target="_blank" class="btn-cta-white">
+        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Hablar por WhatsApp
+      </a>
+      <a href="mailto:hola@zytera.com" class="btn-cta-ghost">
+        Enviar email
+      </a>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="footer-inner">
+      <a href="/" class="footer-logo">Zyte<span>ra</span></a>
+      <p class="footer-copy">© 2025 Zytera. Todos los derechos reservados.</p>
+      <ul class="footer-links">
+        <li><a href="#">Privacidad</a></li>
+        <li><a href="#">Términos</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    // Navbar scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
